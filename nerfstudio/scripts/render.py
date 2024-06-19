@@ -594,7 +594,7 @@ class RenderInterpolated(BaseRender):
 
     def main(self) -> None:
         """Main function."""
-        _, pipeline, _, _ = eval_setup(
+        config, pipeline, _, _ = eval_setup(
             self.load_config,
             eval_num_rays_per_chunk=self.eval_num_rays_per_chunk,
             test_mode="test",
@@ -616,9 +616,24 @@ class RenderInterpolated(BaseRender):
             order_poses=self.order_poses,
         )
 
+        if config.crop_data:
+            # Initialize the background color tensor
+            background_color = torch.tensor([config.crop_data['bg_color']["r"] / 255.0, config.crop_data['bg_color']["g"] / 255.0, config.crop_data['bg_color']["b"] / 255.0])
+
+            # Create the OrientedBox instance
+            obb = OrientedBox.from_params(config.crop_data['center'], config.crop_data['rot'], config.crop_data['scale'])
+
+            crop_data = CropData(
+                background_color=background_color,
+                obb=obb
+            )
+        else:
+            crop_data = None
+
         _render_trajectory_video(
             pipeline,
             camera_path,
+            crop_data=crop_data,
             output_filename=self.output_path,
             rendered_output_names=self.rendered_output_names,
             rendered_resolution_scaling_factor=1.0 / self.downscale_factor,
@@ -632,18 +647,17 @@ class RenderInterpolated(BaseRender):
             check_occlusions=self.check_occlusions,
         )
 
-
 @dataclass
 class SpiralRender(BaseRender):
     """Render a spiral trajectory (often not great)."""
 
-    seconds: float = 3.0
+    seconds: float = 6.0
     """How long the video should be."""
     output_format: Literal["images", "video"] = "video"
     """How to save output data."""
-    frame_rate: int = 24
+    frame_rate: int = 48
     """Frame rate of the output video (only for interpolate trajectory)."""
-    radius: float = 0.1
+    radius: float = 0.2
     """Radius of the spiral."""
 
     def main(self) -> None:

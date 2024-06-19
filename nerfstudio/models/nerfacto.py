@@ -152,6 +152,8 @@ class NerfactoModel(Model):
 
         appearance_embedding_dim = self.config.appearance_embed_dim if self.config.use_appearance_embedding else 0
 
+        #self.scene_box.aabb /= 40
+
         # Fields
         self.field = NerfactoField(
             self.scene_box.aabb,

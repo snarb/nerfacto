@@ -25,7 +25,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from threading import Lock
-from typing import DefaultDict, Dict, List, Literal, Optional, Tuple, Type, cast
+from typing import DefaultDict, Dict, List, Literal, Optional, Tuple, Type, cast, Any
 
 import torch
 import viser
@@ -48,7 +48,6 @@ from nerfstudio.viewer_legacy.server.viewer_state import ViewerLegacyState
 
 TRAIN_INTERATION_OUTPUT = Tuple[torch.Tensor, Dict[str, torch.Tensor], Dict[str, torch.Tensor]]
 TORCH_DEVICE = str
-
 
 @dataclass
 class TrainerConfig(ExperimentConfig):
@@ -85,6 +84,8 @@ class TrainerConfig(ExperimentConfig):
     """Optionally log gradients during training"""
     gradient_accumulation_steps: Dict[str, int] = field(default_factory=lambda: {})
     """Number of steps to accumulate gradients over. Contains a mapping of {param_group:num}"""
+    crop_data: Optional[Dict[str, Any]] = None
+    """Configuration for cropping data"""
 
 
 class Trainer:
