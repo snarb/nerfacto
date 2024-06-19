@@ -359,3 +359,29 @@ If you use this library or find the documentation useful for your research, plea
 <a href="https://github.com/nerfstudio-project/nerfstudio/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=nerfstudio-project/nerfstudio" />
 </a>
+
+# Ainatech
+
+## Custom cropping 
+Add next section to the config.yml before rendering in *interpolate* mode
+```
+crop_data:
+  bg_color:
+    r: 255 # white background color
+    g: 255
+    b: 255
+  center: # center of the bounding box
+    - 1
+    - -0.19
+    - 1.08
+  rot:
+    - 0.0 # no rotation
+    - 0.0
+    - 0.0
+  scale:
+    - 3
+    - 3.13
+    - 3
+```
+and run with *interpolate --load-config outputs/preprocessed/nerfacto/2024-05-28_171406/config.yml*
+change 2024-05-28_171406 to your training checkpoint.
