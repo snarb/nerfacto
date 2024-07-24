@@ -368,6 +368,7 @@ Add next section to the config.yml before rendering in *interpolate* mode
 crop_data:
   bg_color:
     r: 255 # white background color
+    
     g: 255
     b: 255
   center: # center of the bounding box
