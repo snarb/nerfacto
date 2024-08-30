@@ -214,7 +214,7 @@ def setup_event_writer(
         banner_messages: list of messages to always display at bottom of screen
     """
     using_event_writer = False
-
+    experiment_name = 'splatfacto-big-slower'
     if is_comet_enabled:
         curr_writer = CometWriter(log_dir=log_dir, experiment_name=experiment_name, project_name=project_name)
         EVENT_WRITERS.append(curr_writer)

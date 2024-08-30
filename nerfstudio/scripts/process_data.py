@@ -37,6 +37,17 @@ from nerfstudio.process_data.colmap_converter_to_nerfstudio_dataset import BaseC
 from nerfstudio.process_data.images_to_nerfstudio_dataset import ImagesToNerfstudioDataset
 from nerfstudio.process_data.video_to_nerfstudio_dataset import VideoToNerfstudioDataset
 from nerfstudio.utils.rich_utils import CONSOLE
+import os
+
+# Get the current LD_LIBRARY_PATH and add the new path
+current_ld_library_path = os.environ.get('LD_LIBRARY_PATH', '')
+new_path = '/usr/lib/x86_64-linux-gnu'
+
+# Append the new path to the existing LD_LIBRARY_PATH
+os.environ['LD_LIBRARY_PATH'] = f"{new_path}:{current_ld_library_path}"
+
+# Print the updated LD_LIBRARY_PATH to verify
+print('Updated LD_LIBRARY_PATH:', os.environ['LD_LIBRARY_PATH'])
 
 
 @dataclass

@@ -338,7 +338,20 @@ class VanillaPipeline(Pipeline):
         self.eval()
         camera, batch = self.datamanager.next_eval_image(step)
         outputs = self.model.get_outputs_for_camera(camera)
-        metrics_dict, images_dict = self.model.get_image_metrics_and_images(outputs, batch)
+        #metrics_dict, images_dict = self.model.get_image_metrics_and_images(outputs, batch)
+        if self.model.training:
+            self.model.eval()
+            self.model.training = False
+            # Perform the forward pass and compute metrics
+            with torch.no_grad():  # Disable gradient computation
+                metrics_dict, images_dict = self.model.get_image_metrics_and_images(outputs, batch)
+
+            # Restore the model to training mode
+            self.model.train()
+            self.model.training = True
+        else:
+            metrics_dict, images_dict = self.model.get_image_metrics_and_images(outputs, batch)
+
         assert "num_rays" not in metrics_dict
         metrics_dict["num_rays"] = (camera.height * camera.width * camera.size).item()
         self.train()
@@ -379,7 +392,20 @@ class VanillaPipeline(Pipeline):
                 outputs = self.model.get_outputs_for_camera(camera=camera)
                 height, width = camera.height, camera.width
                 num_rays = height * width
-                metrics_dict, image_dict = self.model.get_image_metrics_and_images(outputs, batch)
+                # was: metrics_dict, image_dict = self.model.get_image_metrics_and_images(outputs, batch)
+                if self.model.training:
+                    self.model.eval()
+                    self.model.training = False
+                    # Perform the forward pass and compute metrics
+                    with torch.no_grad():  # Disable gradient computation
+                        metrics_dict, image_dict = self.model.get_image_metrics_and_images(outputs, batch)
+
+                    # Restore the model to training mode
+                    self.model.train()
+                    self.model.training = True
+                else:
+                    metrics_dict, image_dict = self.model.get_image_metrics_and_images(outputs, batch)
+
                 if output_path is not None:
                     for key in image_dict.keys():
                         image = image_dict[key]  # [H, W, C] order

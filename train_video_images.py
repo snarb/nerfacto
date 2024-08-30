@@ -29,7 +29,7 @@ for idx, subdir in enumerate(sorted(subdirs)):
         '--data', input_training_dir,
         '--eval_data', input_evaluation_dir,
         '--output-dir', output_dir,
-        '--skip_colmap'
+        #'--skip_colmap'
     ]
 
     # Print the command for debugging purposes

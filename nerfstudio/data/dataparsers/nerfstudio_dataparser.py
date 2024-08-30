@@ -14,7 +14,7 @@
 """ Data parser for nerfstudio datasets. """
 
 from __future__ import annotations
-
+from pathlib import PosixPath
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, Optional, Tuple, Type
@@ -94,6 +94,7 @@ class Nerfstudio(DataParser):
             data_dir = self.config.data.parent
         else:
             meta = load_from_json(self.config.data / "transforms.json")
+           # meta = load_from_json(PosixPath('/home/brans/Downloads/video/output/000202/transforms.json'))
             data_dir = self.config.data
 
         image_filenames = []
@@ -265,6 +266,19 @@ class Nerfstudio(DataParser):
             )
         )
 
+        # scale_x = 2.0
+        # scale_y = 3.2
+        # scale_z = 0.8
+        #
+        #
+        #
+        # #Create the SceneBox with the specified scale factors
+        # scene_box = SceneBox(
+        #     aabb=torch.tensor(
+        #         [[-scale_x, -scale_y, -scale_z], [scale_x, scale_y, scale_z]], dtype=torch.float32
+        #     )
+        # )
+
         if "camera_model" in meta:
             camera_type = CAMERA_MODEL_TO_TYPE[meta["camera_model"]]
         else:
@@ -320,6 +334,8 @@ class Nerfstudio(DataParser):
         # - applied_transform contains the transformation to saved coordinates from original data coordinates.
         applied_transform = None
         colmap_path = self.config.data / "colmap/sparse/0"
+
+        #colmap_path = PosixPath('/home/brans/Downloads/video/output/000202/colmap/sparse/0')
         if "applied_transform" in meta:
             applied_transform = torch.tensor(meta["applied_transform"], dtype=transform_matrix.dtype)
         elif colmap_path.exists():

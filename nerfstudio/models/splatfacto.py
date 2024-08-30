@@ -819,6 +819,26 @@ class SplatfactoModel(Model):
         if image.dtype == torch.uint8:
             image = image.float() / 255.0
         gt_img = self._downscale_if_required(image)
+
+
+        return gt_img.to(self.device)
+
+    def get_gt_img2(self, target_shape, image: torch.Tensor):
+        """Compute groundtruth image with iteration dependent downscale factor for evaluation purpose
+
+        Args:
+            image: tensor.Tensor in type uint8 or float32
+        """
+        if image.dtype == torch.uint8:
+            image = image.float() / 255.0
+        #gt_img = self._downscale_if_required(image)
+
+        d = image.shape[0] // target_shape[0]
+        if d > 1:
+            gt_img = resize_image(image, d)
+        else:
+            gt_img = image
+
         return gt_img.to(self.device)
 
     def composite_with_background(self, image, background) -> torch.Tensor:
@@ -925,7 +945,7 @@ class SplatfactoModel(Model):
         Returns:
             A dictionary of metrics.
         """
-        gt_rgb = self.composite_with_background(self.get_gt_img(batch["image"]), outputs["background"])
+        gt_rgb = self.composite_with_background(self.get_gt_img2(outputs["rgb"].shape, batch["image"]), outputs["background"])
         predicted_rgb = outputs["rgb"]
 
         combined_rgb = torch.cat([gt_rgb, predicted_rgb], dim=1)

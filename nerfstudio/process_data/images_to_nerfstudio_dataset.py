@@ -87,10 +87,10 @@ class ImagesToNerfstudioDataset(ColmapConverterToNerfstudioDataset):
                 )
                 image_rename_map_paths.update(eval_image_rename_map_paths)
 
-            image_rename_map = dict(
-                (a.relative_to(self.data).as_posix(), b.name) for a, b in image_rename_map_paths.items()
-            )
-            num_frames = len(image_rename_map)
+            # image_rename_map = dict(
+            #     (a.relative_to(self.data).as_posix(), b.name) for a, b in image_rename_map_paths.items()
+            # )
+            num_frames = len(image_rename_map_paths)
             summary_log.append(f"Starting with {num_frames} images")
 
             # # Create mask
@@ -114,6 +114,8 @@ class ImagesToNerfstudioDataset(ColmapConverterToNerfstudioDataset):
             self._run_colmap()
             # Colmap uses renamed images
             image_rename_map = None
+        else:
+            assert False # fix image_rename_map
 
         # Export depth maps
         image_id_to_depth_path, log_tmp = self._export_depth()

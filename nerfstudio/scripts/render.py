@@ -16,11 +16,13 @@
 """
 render.py
 """
-from __future__ import annotations
 
+from __future__ import annotations
+import random
 import gzip
 import json
 import os
+import random
 import shutil
 import struct
 import sys
@@ -602,13 +604,16 @@ class RenderInterpolated(BaseRender):
 
         install_checks.check_ffmpeg_installed()
 
-        if self.pose_source == "eval":
-            assert pipeline.datamanager.eval_dataset is not None
-            cameras = pipeline.datamanager.eval_dataset.cameras
-        else:
-            assert pipeline.datamanager.train_dataset is not None
-            cameras = pipeline.datamanager.train_dataset.cameras
+        # if self.pose_source == "eval":
+        #     assert pipeline.datamanager.eval_dataset is not None
+        #     cameras = pipeline.datamanager.eval_dataset.cameras
+        # else:
+        #     assert pipeline.datamanager.train_dataset is not None
+        #     cameras = pipeline.datamanager.train_dataset.cameras
 
+        cameras = pipeline.datamanager.train_dataset.cameras
+        #random.sample(pipeline.datamanager.train_dataset.cameras, 2)
+        #nerfstudio.cameras.cameras.Cameras
         seconds = self.interpolation_steps * len(cameras) / self.frame_rate
         camera_path = get_interpolated_camera_path(
             cameras=cameras,
