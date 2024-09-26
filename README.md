@@ -369,7 +369,12 @@ nerfacto\nerfstudio\process_data\process_data_utils.py after adjusting INPUT_DAT
 
 ## Training on video
 
-Call nerfstudio\scripts\train_video.py after adjusting INPUT_DATASET_DIR and OUTPUT_DATASET_DIR
+1. Update colmap path: modify L97 at nerfstudio\data\dataparsers\nerfstudio_dataparser.py . ToDo: move it to the config
+
+2. Call nerfstudio\scripts\train_video.py after adjusting INPUT_DATASET_DIR and OUTPUT_DATASET_DIR
+
+## Training on video
+
 
 
 ## Custom cropping 
