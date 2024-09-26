@@ -265,10 +265,12 @@ def copy_images_list(
         if verbose:
             CONSOLE.log(f"Copying image {idx + 1} of {len(image_paths)}...")
         copied_image_path = image_dir / f"{image_prefix}{idx + 1:05d}{image_path.suffix}"
+        #copied_image_path = image_dir / f"{image_path.stem}{image_path.suffix}"
         try:
             # if CR2 raw, we want to read raw and write RAW_CONVERTED_SUFFIX, and change the file suffix for downstream processing
             if image_path.suffix.lower() in ALLOWED_RAW_EXTS:
                 copied_image_path = image_dir / f"{image_prefix}{idx + 1:05d}{RAW_CONVERTED_SUFFIX}"
+                #copied_image_path = image_dir / f"{image_path.stem}{RAW_CONVERTED_SUFFIX}"
                 with rawpy.imread(str(image_path)) as raw:
                     rgb = raw.postprocess()
                 imageio.imsave(copied_image_path, rgb)

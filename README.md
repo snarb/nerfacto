@@ -361,6 +361,16 @@ If you use this library or find the documentation useful for your research, plea
 </a>
 
 # Ainatech
+In the video dir all frames should be a subdirs 0, 1, 2, 3 and a single colmap folder
+
+## Preprocessing
+To call process_data on sequence of video frames call 
+nerfacto\nerfstudio\process_data\process_data_utils.py after adjusting INPUT_DATASET_DIR and OUTPUT_DATASET_DIR
+
+## Training on video
+
+Call nerfstudio\scripts\train_video.py after adjusting INPUT_DATASET_DIR and OUTPUT_DATASET_DIR
+
 
 ## Custom cropping 
 Add next section to the config.yml before rendering in *interpolate* mode

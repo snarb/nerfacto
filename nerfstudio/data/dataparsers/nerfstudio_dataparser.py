@@ -93,8 +93,8 @@ class Nerfstudio(DataParser):
             meta = load_from_json(self.config.data)
             data_dir = self.config.data.parent
         else:
-            meta = load_from_json(self.config.data / "transforms.json")
-           # meta = load_from_json(PosixPath('/home/brans/Downloads/video/output/000202/transforms.json'))
+            #meta = load_from_json(self.config.data / "transforms.json")
+            meta = load_from_json(PosixPath('/mnt/new_drive/colmap/transforms.json'))
             data_dir = self.config.data
 
         image_filenames = []

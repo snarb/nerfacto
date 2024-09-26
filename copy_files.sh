@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Source and target directories
-SOURCE_DIR="/home/brans/Downloads/video/TheEgg_subclip_01"
-DATASET_DIR="/home/brans/Downloads/video/dataset"
+SOURCE_DIR="/mnt/new_drive/glasses/Camera_inputs/" #"/home/brans/Downloads/video/TheEgg_subclip_01"
+DATASET_DIR="/mnt/new_drive/glasses/splitted_dataset/"
 
 # Loop through each subfolder in the source directory
 for SUBFOLDER in "$SOURCE_DIR"/*; do
@@ -15,7 +15,7 @@ for SUBFOLDER in "$SOURCE_DIR"/*; do
       SOURCE_FILE="$SUBFOLDER/frames.$FRAME_NUM.jpg"
       
       # Determine the target directory based on the subfolder name
-      if [ "$SUBFOLDER_NAME" == "C001_C094_062611_001" ] || [ "$SUBFOLDER_NAME" == "G001_D094_0626PB_001" ]; then
+      if [ "$SUBFOLDER_NAME" == "C001_D098_0626FU.000175" ] || [ "$SUBFOLDER_NAME" == "G001_B098_0626B8.000176" ]; then
         TARGET_SUBDIR="evaluation"
       else
         TARGET_SUBDIR="training"
