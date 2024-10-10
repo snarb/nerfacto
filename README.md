@@ -361,6 +361,11 @@ If you use this library or find the documentation useful for your research, plea
 </a>
 
 # Ainatech
+
+pip install gsplat==1.0.0 # Other version did not worked
+export REPO_PATH=/home/ainaadmin/pavlo/nerfstudio/
+export PYTHONPATH="$REPO_PATH:$PYTHONPATH" # To use code from the repository and not the nerfstudio pip package
+
 In the video dir all frames should be a subdirs 0, 1, 2, 3 and a single colmap folder
 
 ## Preprocessing
@@ -372,6 +377,10 @@ nerfacto\nerfstudio\process_data\process_data_utils.py after adjusting INPUT_DAT
 1. Update colmap path: modify L97 at nerfstudio\data\dataparsers\nerfstudio_dataparser.py . ToDo: move it to the config
 
 2. Call nerfstudio\scripts\train_video.py after adjusting INPUT_DATASET_DIR and OUTPUT_DATASET_DIR
+
+e.g.
+cd /home/ainaadmin/pavlo/nerfstudio/nerfstudio/scripts/
+nohup python3 train_video.py > output.log 2>&1 &
 
 ## Training on video
 
